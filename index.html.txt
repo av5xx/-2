@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>«”∆·… ﬂ—ÊÌ… ?</title>
+    
+    <style>
+      
+/* ≈⁄œ«œ«  ⁄«„… */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #e0f7fa, #b9d6e8);
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/*  —ÊÌ”… «·’›Õ… */
+header {
+    background: linear-gradient(135deg, #00aaff, #0077cc);
+    padding: 20px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-bottom: 5px solid #0077cc;
+}
+
+/* «·Õ«ÊÌ… «·—∆Ì”Ì… */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* √ﬁ”«„ «·√”∆·… */
+.section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.section:hover {
+    background: #f9f9f9;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ⁄‰«ÊÌ‰ «·√ﬁ”«„ */
+.section h2 {
+    background: linear-gradient(90deg, #00aaff, #00cc99);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* ‰’Ê’ «·√”∆·… */
+.section p {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/*  ·„ÌÕ«  «·≈Ã«»… */
+.hints {
+    margin-top: 10px;
+}
+
+.hint {
+    display: inline-block;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    color: #333;
+    border-radius: 4px;
+    margin-right: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.hint:hover {
+    background: linear-gradient(135deg, #ff9900, #ff6600);
+    transform: scale(1.05);
+}
+
+.hint.selected {
+    background: linear-gradient(135deg, #00cc00, #009900);
+    color: white;
+}
+
+/* —”«∆· «·≈Ã«»«  */
+.message {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* —”«∆· «·≈Ã«»… «·’ÕÌÕ… Ê«·Œ«ÿ∆… */
+.correct {
+    color: #00cc00;
+}
+
+.incorrect {
+    color: #cc0000;
+}
+
+/*  ‰ﬁ· «·√“—«— */
+.nav, .navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.nav button, .navigation-buttons button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #00aaff, #0077cc);
+    color: white;
+    border-radius: 4px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.nav button:hover, .navigation-buttons button:hover {
+    background: linear-gradient(135deg, #0077cc, #005599);
+    transform: scale(1.05);
+}
+
+/*  ’„Ì„ “— "„‘«—ﬂ… «·”ƒ«·" */
+button {
+    background-color: #007bff; /* ·Ê‰ «·Œ·›Ì… «·√“—ﬁ */
+    color: white; /* ·Ê‰ «·‰’ «·√»Ì÷ */
+    border: none; /* ≈“«·… «·ÕœÊœ «·«› —«÷Ì… */
+    border-radius: 5px; /* ÕÊ«› „œÊ—… */
+    padding: 10px 20px; /* „”«Õ… œ«Œ·Ì… */
+    font-size: 16px; /* ÕÃ„ «·Œÿ */
+    cursor: pointer; /*  €ÌÌ— ‘ﬂ· «·„ƒ‘— ⁄‰œ «·„—Ê— ›Êﬁ «·“— */
+    transition: background-color 0.3s, transform 0.3s; /*  √ÀÌ— «·«‰ ﬁ«· ⁄‰œ «· ›«⁄· */
+}
+
+/*  ’„Ì„ «·»Êﬂ” «·ÃœÌœ «·„ Ã«Ê» */
+.dynamic-box {
+    background-color: #f0f0f0; /* ‰›” ·Ê‰ «·Œ·›Ì… ›Ì «·»Êﬂ” «·√Ê· */
+    padding: 20px; /* ‰›” «·„”«›… «·œ«Œ·Ì… */
+    margin: 20px 0;
+    border-radius: 10px; /* ‰›” «·ÕœÊœ «·œ«∆—Ì… */
+    border: 2px solid #007bff; /* ‰›” ‰Ê⁄ «·≈ÿ«— */
+    text-align: center; /* „Õ«–«… «·‰’ ›Ì «·Ê”ÿ */
+    word-wrap: break-word; /* Ì”«⁄œ ⁄·Ï «· ›«› «·‰’Ê’ «·ÿÊÌ·… œ«Œ· «·»Êﬂ” */
+    max-width: 600px; /*  ÕœÌœ √ﬁ’Ï ⁄—÷ ··»Êﬂ” */
+    margin-left: auto; /* ·Ã⁄· «·»Êﬂ” „ „—ﬂ“« */
+    margin-right: auto; /* ·Ã⁄· «·»Êﬂ” „ „—ﬂ“« */
+}
+
+.dynamic-box h2 {
+    margin-top: 0;
+   
+}
+
+.dynamic-box p {
+    margin-bottom: 0;
+}
+
+/*  √ÀÌ— «· „—Ì— ›Êﬁ «·“— */
+button:hover {
+    background-color: #0056b3; /* ·Ê‰ «·Œ·›Ì… ⁄‰œ «· „—Ì— */
+    transform: scale(1.05); /*  ﬂ»Ì— »”Ìÿ ⁄‰œ «· „—Ì— */
+}
+
+/*  √ÀÌ— «·÷€ÿ ⁄·Ï «·“— */
+button:active {
+    background-color: #004080; /* ·Ê‰ «·Œ·›Ì… ⁄‰œ «·÷€ÿ */
+    transform: scale(0.95); /*  ’€Ì— »”Ìÿ ⁄‰œ «·÷€ÿ */
+}
+
+/* „”«Õ… ·≈⁄·«‰«  «·»«‰— */
+.banner-ad {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(90deg, #ffcc00, #ff9900);
+    text-align: center;
+    line-height: 60px;
+    margin: 20px 0;
+    font-size: 18px;
+    color: #333;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ‰«›–… „‰»Àﬁ… */
+.popup-ad {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border: 2px solid #00aaff;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 8px;
+}
+
+.popup-ad h2 {
+    background: linear-gradient(90deg, #00aaff, #0077cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0;
+}
+
+.popup-ad button {
+    background: linear-gradient(135deg, #00aaff, #0077cc);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+    border-radius: 4px;
+}
+
+.popup-ad button:hover {
+    background: linear-gradient(135deg, #0077cc, #005599);
+}
+
+/* Œ·›Ì… ‰«›–… „‰»Àﬁ… */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+}
+
+/* ≈⁄·«‰ „œ„Ã »«·„Õ ÊÏ */
+.native-ad {
+    background: linear-gradient(135deg, #eee, #ddd);
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+    border-left: 5px solid #00aaff;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ≈⁄·«‰ ”Ì«ﬁÌ */
+.contextual-ad {
+    display: inline-block;
+    padding: 10px;
+    background: linear-gradient(135deg, #ffd700, #ffcc00);
+    margin: 20px 0;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+  /* «·√‰„«ÿ «·√”«”Ì… */
+        .section {
+            display: none; /* ≈Œ›«¡ «·√ﬁ”«„ ›Ì «·»œ«Ì… */
+        }
+
+        .hint.correct {
+            background-color: #00cc00;
+            color: white;
+        }
+
+        .hint.incorrect {
+            background-color: #cc0000;
+            color: white;
+        }
+
+        .message {
+            font-size: 16px;
+        }
+
+        .message.correct {
+            color: #00cc00;
+        }
+
+        .message.incorrect {
+            color: #cc0000;
+        }
+
+        .banner-ad, .contextual-ad, .native-ad, .video-ad {
+            margin: 10px 0;
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .popup-ad {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .counter {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .hints {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* ⁄„ÊœÌ‰ */
+            gap: 10px; /* «·„”«›… »Ì‰ «·√“—«— */
+            width: 100%;
+            max-width: 300px; /*  ÕœÌœ «·⁄—÷ «·√ﬁ’Ï */
+            margin: 0 auto; /* „Õ«–«… «·Ê”ÿ */
+        }
+
+        .hints .hint {
+            text-align: center; /* „Õ«–«… «·‰’ ›Ì Ê”ÿ «·“— */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hint.correct {
+            background-color: #00cc00;
+            color: white;
+        }
+
+        .hint.incorrect {
+            background-color: #cc0000;
+            color: white;
+        }
+
+        .message.correct {
+            color: #00cc00;
+        }
+
+        .message.incorrect {
+            color: #cc0000;
+        }
+
+        .navigation-buttons {
+            margin-top: 20px;
+        }
+
+        .navigation-buttons button {
+            margin: 0 10px;
+        }
+
+        .share-location-button {
+            margin-top: 20px;
+        }
+    </style>
+          
+    <!-- ≈÷«›… „ﬂ »… html2canvas -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+
+<header>«”∆·… ﬂ—ÊÌ… ?</header>
+
+<!-- ≈⁄·«‰ »«‰— -->
+<div class="banner-ad">
+    <p>
+         <a href="https://www.example.com" target="_blank">“Ê—Ê‰« ⁄·Ï  Ìﬂ  Êﬂ </a>  
+    </p> 
+</div>
+
+<div class="nav">
+    <button onclick="showSection('general')">«”∆·… ⁄«„…</button>
+    <button onclick="showSection('matches')">„»«—Ì« </button>
+    <button onclick="showSection('events')">«Õœ«À ﬂ—ÊÌ…</button>
+    <button onclick="showSection('impossible')">„” ÕÌ·…!</button>
+</div>
+
+<div class="container">
+
+    <!-- ﬁ”„ «·«”∆·… «·⁄«„… -->
+    <div class="section" id="generalSection">
+        <h2>«”∆·… ⁄«„…</h2>
+        <p id="questionGeneral">„« ÂÊ «·‰«œÌ «·–Ì ›«“ »√ﬂÀ— √·ﬁ«» «·œÊ—Ì «·≈”»«‰Ìø</p>
+        <p id="generalCounter" class="counter">”ƒ«· 1 „‰ 2</p>
+        <div class="hints" id="generalHints">
+            <!-- «·≈Ã«»«  ” ÷«› Â‰« ⁄»— JavaScript -->
+        </div>
+        <p class="message" id="generalMessage"></p>
+
+
+        <div class="navigation-buttons">
+            <button onclick="prevQuestion('general')">«·”«»ﬁ</button>
+            <button onclick="nextQuestion('general')">«· «·Ì</button>
+        </div>
+        <p class="navigation-message">??«” ⁄„· Â–Â «·√“—«— ·· ‰ﬁ· »Ì‰ «·√”∆·… ??</p>
+    </div>
+
+    <!-- ﬁ”„ «·„»«—Ì«  -->
+    <div class="section" id="matchesSection">
+        <h2>„»«—Ì« </h2>
+        <p id="questionMatches">›Ì √Ì ”‰… √ıﬁÌ„  √Ê· »ÿÊ·… ﬂ√” «·⁄«·„ø</p>
+        <p id="matchesCounter" class="counter">”ƒ«· 1 „‰ 1</p>
+        <div class="hints" id="matchesHints">
+            <!-- «·≈Ã«»«  ” ÷«› Â‰« ⁄»— JavaScript -->
+        </div>
+        <p class="message" id="matchesMessage"></p>
+
+        <div class="navigation-buttons">
+            <button onclick="prevQuestion('matches')">«·”«»ﬁ</button>
+            <button onclick="nextQuestion('matches')">«· «·Ì</button>
+        </div>
+        <p class="navigation-message">??«” ⁄„· Â–Â «·√“—«— ·· ‰ﬁ· »Ì‰ «·√”∆·… ??</p>
+    </div>
+
+    <!-- ﬁ”„ «·«Õœ«À «·ﬂ—ÊÌ… -->
+    <div class="section" id="eventsSection">
+        <h2>«Õœ«À ﬂ—ÊÌ…</h2>
+        <p id="questionEvents">„‰ ÂÊ «··«⁄» «·–Ì ”Ã· √”—⁄ Âœ› ›Ì  «—ÌŒ ﬂ√” «·⁄«·„ø</p>
+        <p id="eventsCounter" class="counter">”ƒ«· 1 „‰ 1</p>
+        <div class="hints" id="eventsHints">
+            <!-- «·≈Ã«»«  ” ÷«› Â‰« ⁄»— JavaScript -->
+        </div>
+        <p class="message" id="eventsMessage"></p>
+
+        <div class="navigation-buttons">
+            <button onclick="prevQuestion('events')">«·”«»ﬁ</button>
+            <button onclick="nextQuestion('events')">«· «·Ì</button>
+        </div>
+        <p class="navigation-message">??«” ⁄„· Â–Â «·√“—«— ·· ‰ﬁ· »Ì‰ «·√”∆·… ??</p>
+    </div>
+
+    <!-- ﬁ”„ «·√”∆·… «·„” ÕÌ·… -->
+    <div class="section" id="impossibleSection">
+        <h2>„” ÕÌ·…!</h2>
+        <p id="questionImpossible">„‰ ÂÊ «··«⁄» «·–Ì ”Ã· Âœ›Ì‰ ›Ì ‰Â«∆Ì ﬂ√” «·⁄«·„ 1950ø</p>
+        <p id="impossibleCounter" class="counter">”ƒ«· 1 „‰ 1</p>
+        <div class="hints" id="impossibleHints">
+            <!-- «·≈Ã«»«  ” ÷«› Â‰« ⁄»— JavaScript -->
+        </div>
+        <p class="message" id="impossibleMessage"></p>
+
+        <div class="navigation-buttons">
+            <button onclick="prevQuestion('impossible')">«·”«»ﬁ</button>
+            <button onclick="nextQuestion('impossible')">«· «·Ì</button>
+        </div>
+        <p class="navigation-message">??«” ⁄„· Â–Â «·√“—«— ·· ‰ﬁ· »Ì‰ «·√”∆·… ??</p>
+    </div>
+
+    <!-- ≈÷«›… “— «·„‘«—ﬂ… -->
+    <button onclick="takeScreenshot()">„‘«—ﬂ… «·”ƒ«·</button>
+
+     <!-- «·»Êﬂ” «·ÃœÌœ «·„ Ã«Ê» „⁄ «·‰’ -->
+    <div class="dynamic-box">
+        <h2>«Œ— «·√Œ»«— ??</h2> 
+        <p>Ì „  ÕœÌÀ «·«”∆·… »‘ﬂ· ‘»Â ÌÊ„Ì ??</p> 
+        <p>«Œ »— „⁄—› ﬂ «·ﬂ—ÊÌ… ??</p> 
+        <p>‘«—ﬂ «·—«»ÿ „⁄ «·«’œﬁ«¡ Ê«‘⁄· «· ÕœÌ ??</p> 
+        <p>·« ‰”Ï “Ì«— ‰« „—… «Œ—Ï ??</p>
+    </div>
+
+   
+
+    <!-- ‰«›–… „‰»Àﬁ… -->
+    <div class="popup-overlay" id="popupOverlay"></div>
+    <div class="popup-ad" id="popupAd">
+        <h2>≈⁄·«‰ Œ«’</h2>
+        <p>«” „ ⁄ » Ã—»… Œ«·Ì… „‰ «·«⁄·«‰«  ?</p>
+        <button onclick="closePopup()">≈€·«ﬁ</button>
+    </div>
+
+</div>
+<script>
+    // »Ì«‰«  «·√”∆·…
+const questions = {
+    general: [
+        { 
+            question: "„« ÂÊ √Ê· ‰«œÚ Õﬁﬁ À·«ÀÌ… «·œÊ—Ì Ê«·ﬂ√” ÊœÊ—Ì «·√»ÿ«· ›Ì „Ê”„ Ê«Õœø", 
+            answer: "”Ì· Ìﬂ", 
+            hints: ["„«‰‘” — ÌÊ‰«Ì œ", "»—‘·Ê‰…", "»«Ì—‰ „ÌÊ‰Œ", "”Ì· Ìﬂ"] 
+        },
+        { 
+            question: "„‰ ÂÊ «··«⁄» «·–Ì Õ’· ⁄·Ï √ﬂ»— ⁄œœ „‰ «·»ÿ«ﬁ«  «·Õ„—«¡ ›Ì  «—ÌŒ «·œÊ—Ì «·≈‰Ã·Ì“Ì «·„„ «“ø", 
+            answer: "»« —Ìﬂ ›ÌÌ—«", 
+            hints: ["—ÊÌ ﬂÌ‰", "»« —Ìﬂ ›ÌÌ—«", "—Ì ‘«—œ œ«‰", "œÊ‰ﬂ«‰ ›Ì—€”Ê‰"] 
+        },
+        { 
+            question: "„« ÂÊ «·‰«œÌ «·–Ì √ıﬁ’Ì „‰ œÊ—Ì √»ÿ«· √Ê—Ê»« —€„ ⁄œ„  ·ﬁÌÂ √Ì Œ”«—… ÿÊ«· «·»ÿÊ·…ø", 
+            answer: "√—”‰«·", 
+            hints: ["√—”‰«·", "ÌÊ›‰ Ê”", "»«—Ì” ”«‰ ÃÌ—„«‰", "„«‰‘” — ”Ì Ì"] 
+        },
+        { 
+            question: "„‰ ÂÊ √’€— „œ—» ﬁ«œ ›—ÌﬁÂ ··›Ê“ »œÊ—Ì √»ÿ«· √Ê—Ê»«ø", 
+            answer: "ŒÊ”ÌÂ ›Ì·«·Ê‰€«", 
+            hints: ["»Ì» ÃÊ«—œÌÊ·«", "“Ì‰ «·œÌ‰ “Ìœ«‰", "ŒÊ”ÌÂ ›Ì·«·Ê‰€«", "—Ê»— Ê œÌ „« ÌÊ"] 
+        },
+        { 
+            question: "›Ì √Ì ⁄«„  „  √”Ì” ‰«œÌ ÌÊ›‰ Ê”ø", 
+            answer: "1897", 
+            hints: ["1901", "1897", "1889", "1910"] 
+        },
+        { 
+            question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· √ﬂ»— ⁄œœ „‰ «·√Âœ«› ›Ì „Ê”„ Ê«Õœ ›Ì  «—ÌŒ «·œÊ—Ì «·≈”»«‰Ìø", 
+            answer: "·ÌÊ‰Ì· „Ì”Ì", 
+            hints: ["ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "·ÌÊ‰Ì· „Ì”Ì", "—«ƒÊ·", "ÂÊÃÊ ”«‰‘Ì“"] 
+        },
+        { 
+            question: "„« ÂÊ √ﬂ»— ⁄œœ „‰ «·√Âœ«›  „  ”ÃÌ·Â ›Ì „»«—«… Ê«Õœ… ›Ì «·œÊ—Ì «·≈‰Ã·Ì“Ì «·„„ «“ø", 
+            answer: "11 Âœ›«", 
+            hints: ["9 √Âœ«›", "10 √Âœ«›", "11 Âœ›«", "12 Âœ›«"] 
+        },
+        { 
+            question: "„‰ ÂÊ «··«⁄» «·–Ì ·⁄» √ﬂÀ— ⁄œœ „‰ «·„»«—Ì«  «·œÊ·Ì… œÊ‰ √‰ Ì”Ã· √Ì Âœ›ø", 
+            answer: "ﬂ«›Ê", 
+            hints: ["Œ«›ÌÌ— “«‰Ì Ì", "ﬂ«›Ê", "»«Ê·Ê „«·œÌ‰Ì", "√‘·Ì ﬂÊ·"] 
+        },
+        { 
+            question: "„« ÂÊ «·›—Ìﬁ «·–Ì Œ”— √ﬂÀ— ‰Â«∆Ì«  œÊ—Ì √»ÿ«· √Ê—Ê»«ø", 
+            answer: "ÌÊ›‰ Ê”", 
+            hints: ["„Ì·«‰", "—Ì«· „œ—Ìœ", "ÌÊ›‰ Ê”", "·Ì›—»Ê·"] 
+        },
+        { 
+            question: "„‰ ÂÊ «··«⁄» «·–Ì ›«“ »œÊ—Ì √»ÿ«· √Ê—Ê»« „⁄ À·«À… √‰œÌ… „Œ ·›…ø", 
+            answer: "ﬂ·«—‰” ”ÌœÊ—›", 
+            hints: ["’«„ÊÌ· ≈Ì Ê", "ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "ﬂ·«—‰” ”ÌœÊ—›", " ‘«»Ì √·Ê‰”Ê"] 
+        },
+        { 
+            question: "„« ÂÊ √ﬁœ„ „·⁄» ›Ì «·⁄«·„ ·« Ì“«· Ìı” Œœ„ ›Ì ﬂ—… «·ﬁœ„ø", 
+            answer: "»—«„«· ·Ì‰", 
+            hints: ["√‰›Ì·œ", "ﬂ—«›‰ ﬂÊ ÌÃ", "»—«„«· ·Ì‰", "”Ì· Ìﬂ »«—ﬂ"] 
+        },
+        { 
+            question: "„‰ ÂÊ «··«⁄» «·–Ì Õﬁﬁ √ﬂ»— ⁄œœ „‰ «·√·ﬁ«» ›Ì  «—ÌŒ ﬂ—… «·ﬁœ„ø", 
+            answer: "œ«‰Ì √·›Ì”", 
+            hints: ["√‰œ—Ì” ≈‰ÌÌ” «", "·ÌÊ‰Ì· „Ì”Ì", "ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "œ«‰Ì √·›Ì”"] 
+        },
+        { 
+            question: "„« ÂÊ «·‰«œÌ «·–Ì ·„ ÌŒ”— √Ì „»«—«… ›Ì „Ê”„ ﬂ«„· „‰ «·œÊ—Ì «·≈‰Ã·Ì“Ì «·„„ «“ø", 
+            answer: "√—”‰«·", 
+            hints: ["·Ì›—»Ê·", "„«‰‘” — ÌÊ‰«Ì œ", "√—”‰«·", " ‘Ì·”Ì"] 
+        },
+        { 
+            question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· √”—⁄ Â« —Ìﬂ ›Ì  «—ÌŒ œÊ—Ì √»ÿ«· √Ê—Ê»«ø", 
+            answer: "»«›Ì Ì„»Ì €Ê„Ì“", 
+            hints: ["ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "—Ê»—  ·Ì›«‰œÊ›”ﬂÌ", "»«›Ì Ì„»Ì €Ê„Ì“", "·ÌÊ‰Ì· „Ì”Ì"] 
+        },
+        { 
+            question: "ﬂ„ ⁄œœ «·„—«  «· Ì ›«“ »Â« ›—Ìﬁ »«Ì—‰ „ÌÊ‰Œ »œÊ—Ì √»ÿ«· √Ê—Ê»«ø", 
+            answer: "6 „—« ", 
+            hints: ["5 „—« ", "6 „—« ", "7 „—« ", "8 „—« "] 
+        }
+    ], 
+matches: [
+    { question: "›Ì √Ì ”‰… ›«“  ≈Ìÿ«·Ì« »√Ê· »ÿÊ·… ﬂ√” «·⁄«·„ø", answer: "1934", hints: ["1934", "1930", "1950", "1962"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· «·Âœ› «·–Â»Ì «·ÊÕÌœ ›Ì ‰Â«∆Ì ﬂ√” «·⁄«·„ 1998ø", answer: "≈Ì„«‰ÊÌ· »Ê Ì", hints: ["“Ìœ«‰", "≈Ì„«‰ÊÌ· »Ê Ì", "Â‰—Ì", "œÌ‘«„»"] },
+    { question: "›Ì √Ì ”‰… ›«“ «·√—Ã‰ Ì‰Ì „«—«œÊ‰« »ﬂ√” «·⁄«·„ø", answer: "1986", hints: ["1982", "1986", "1990", "1994"] },
+    { question: "„‰ ﬂ«‰ „œ—» ›—Ìﬁ √·„«‰Ì« ⁄‰œ„« ›«“Ê« »ﬂ√” «·⁄«·„ 2014ø", answer: "ÌÊ«ŒÌ„ ·Ê›", hints: ["ÌÊ—€‰ ﬂ·Ì‰”„«‰", "ÌÊ«ŒÌ„ ·Ê›", "ÂÌ·„Ê  ‘Ê‰", "›—«‰“ »Ìﬂ‰»«Ê—"] },
+    { question: "ﬂ„ „—… ›«“  «·√Ê—Ê€Ê«Ì »ﬂ√” «·⁄«·„ø", answer: "„— Ì‰", hints: ["„— Ì‰", "À·«À „—« ", "√—»⁄ „—« ", "„—… Ê«Õœ…"] },
+    { question: "„« ÂÊ «·›—Ìﬁ «·–Ì ›«“ »√ﬂ»— ⁄œœ „‰ «·√·ﬁ«» ›Ì œÊ—Ì √»ÿ«· √Ê—Ê»«ø", answer: "—Ì«· „œ—Ìœ", hints: ["»—‘·Ê‰…", "„Ì·«‰", "—Ì«· „œ—Ìœ", "»«Ì—‰ „ÌÊ‰Œ"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ›«“ »Ã«∆“… √›÷· ·«⁄» ›Ì ﬂ√” «·⁄«·„ 2018ø", answer: "·Êﬂ« „Êœ—Ì ‘", hints: ["ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "·ÌÊ‰Ì· „Ì”Ì", "·Êﬂ« „Êœ—Ì ‘", "√‰ÿÊ«‰ €—Ì“„«‰"] },
+    { question: "√Ì œÊ·… «” ÷«›  ﬂ√” «·⁄«·„ „— Ì‰ø", answer: "≈Ìÿ«·Ì«", hints: ["≈Ìÿ«·Ì«", "«·»—«“Ì·", "›—‰”«", "«·√—Ã‰ Ì‰"] },
+    { question: "›Ì √Ì ⁄«„ ›«“  ≈”»«‰Ì« »√Ê· »ÿÊ·… ﬂ√” «·⁄«·„ø", answer: "2010", hints: ["2006", "2010", "2014", "2018"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ›«“ »Ã«∆“… «·Õ–«¡ «·–Â»Ì ›Ì ﬂ√” «·⁄«·„ 2014ø", answer: "Œ«„Ì” —Êœ—Ì€Ì“", hints: [" Ê„«” „Ê·—", "·ÌÊ‰Ì· „Ì”Ì", "‰Ì„«—", "Œ«„Ì” —Êœ—Ì€Ì“"] },
+    { question: "„‰ ÂÊ «·„œ—» «·–Ì ﬁ«œ «·„‰ Œ» «·»—«“Ì·Ì ··›Ê“ »ﬂ√” «·⁄«·„ 2002ø", answer: "·ÊÌ“ ›Ì·Ì»Ì ”ﬂÊ·«—Ì", hints: ["„«—ÌÊ “«€«·Ê", "ﬂ«—·Ê” √·»— Ê »«—Ì—«", "·ÊÌ“ ›Ì·Ì»Ì ”ﬂÊ·«—Ì", " Ì Ì"] },
+    { question: "„« ÂÊ «·›—Ìﬁ «·–Ì ›«“ »ﬂ√” «·√„„ «·√Ê—Ê»Ì… ⁄«„ 1992ø", answer: "«·œ‰„«—ﬂ", hints: ["√·„«‰Ì«", "«·œ‰„«—ﬂ", "≈Ìÿ«·Ì«", "ÂÊ·‰œ«"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· √ﬂÀ— „‰ 50 Âœ›« ›Ì „Ê”„ Ê«Õœ ›Ì «·œÊ—Ì«  «·√Ê—Ê»Ì… «·ﬂ»—Ïø", answer: "·ÌÊ‰Ì· „Ì”Ì", hints: ["ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "—Ê»—  ·Ì›«‰œÊ›”ﬂÌ", "·ÌÊ‰Ì· „Ì”Ì", "·ÊÌ” ”Ê«—Ì“"] },
+    { question: "„« ÂÊ √ﬂ»— ›«—ﬁ √Âœ«› ›Ì ‰Â«∆Ì ﬂ√” «·⁄«·„ø", answer: "«·»—«“Ì· ÷œ «·”ÊÌœ (1958)", hints: ["«·»—«“Ì· ÷œ «·”ÊÌœ (1958)", "√·„«‰Ì« ÷œ «·√—Ã‰ Ì‰ (1990)", "›—‰”« ÷œ ﬂ—Ê« Ì« (2018)", "≈Ìÿ«·Ì« ÷œ «·„Ã— (1938)"] },
+    { question: "„‰ ÂÊ √’€— ·«⁄» Ì”Ã· Âœ›« ›Ì  «—ÌŒ ﬂ√” «·⁄«·„ø", answer: "»Ì·ÌÂ", hints: ["„«—«œÊ‰«", "»Ì·ÌÂ", "—Ê‰«·œÊ", "„»«»Ì"] }
+], 
+events: [
+    { 
+        question: "„« ÂÊ «··«⁄» «·–Ì ”Ã· Âœ›« »ﬁœ„Â «·Ì„‰Ï ›Ì √Ê· œﬁÌﬁ… „‰ „»«—«… ‰Â«∆Ì… œÊ—Ì √»ÿ«· √Ê—Ê»« ·ÌÕﬁﬁ —ﬁ„« ﬁÌ«”Ì«ø", 
+        answer: "≈œÊ«—œÊ ‰ÌﬂÌ›Ê—", 
+        hints: ["≈œÊ«—œÊ ‰ÌﬂÌ›Ê—", "”Ì—ŒÌÊ —«„Ê”", "—Ê»— Ê ﬂ«—·Ê”", "—Ê‰«·œÌ‰ÌÊ"] 
+    },
+    { 
+        question: "√Ì ›—Ìﬁ ”Ã· Âœ›« ›Ì „—„«Â „‰  ”œÌœ… €Ì— „»«‘—… ‰›–Â« «·›—Ìﬁ «·„‰«›” Œ·«· „»«—«… œÊ—Ì √»ÿ«· √Ê—Ê»«ø", 
+        answer: "»—‘·Ê‰…", 
+        hints: ["»—‘·Ê‰…", "—Ì«· „œ—Ìœ", "„«‰‘” — ÌÊ‰«Ì œ", "»«Ì—‰ „ÌÊ‰ÌŒ"] 
+    },
+    { 
+        question: "√Ì „»«—«… ‘Âœ  ÕœÊÀ Œÿ√ „‰ «·Õﬂ„ √œÏ ≈·Ï  ”ÃÌ· Âœ› ·„ Ìﬂ‰ ÷„‰ «··⁄» «·ÿ»Ì⁄Ì Ê „ «⁄ „«œÂ »⁄œ „—«Ã⁄…  ﬁ‰Ì… «·›ÌœÌÊ ·√Ê· „—…ø", 
+        answer: "«·√—Ã‰ Ì‰ ÷œ √Ì”·‰œ«", 
+        hints: ["«·√—Ã‰ Ì‰ ÷œ √Ì”·‰œ«", "›—‰”« ÷œ ‰ÌÃÌ—Ì«", "√·„«‰Ì« ÷œ «·„ﬂ”Ìﬂ", "«·»—«“Ì· ÷œ ’—»Ì«"] 
+    },
+    { 
+        question: "„‰ ÂÊ «··«⁄» «·–Ì Õ’· ⁄·Ï »ÿ«ﬁ… ’›—«¡ ›Ì √Ê· œﬁÌﬁ… „‰ „»«—«… ‰Â«∆Ì ﬂ√” «·⁄«·„ø", 
+        answer: "√‰ÿÊ‰ÌÊ —Ìﬂ«—œÊ", 
+        hints: ["√‰ÿÊ‰ÌÊ —Ìﬂ«—œÊ", "—Ê»— Ê »« —Ì”", "„«—ÌÊ »«·Ê Ì·Ì", "›Ì·Ì»Ì ·ÊÌ”"] 
+    },
+    { 
+        question: "„« ÂÊ «·›—Ìﬁ «·–Ì ›«“ »√Ê· „»«—«… ·Â ›Ì œÊ—Ì √»ÿ«· √Ê—Ê»« »›÷· Âœ› ”Ã·Â Õ«—” «·„—„Ïø", 
+        answer: "‘ Ê €«— ", 
+        hints: ["‘ Ê €«— ", "›Ê·Â«„", "„«‰‘” — ”Ì Ì", "·« ”ÌÊ"] 
+    },
+    { 
+        question: "√Ì ·«⁄» ”Ã· Âœ›« „‰ ÷—»… —ﬂ‰Ì… „»«‘—… ›Ì „»«—«… ‰Â«∆Ì œÊ—Ì √»ÿ«· √Ê—Ê»«ø", 
+        answer: "ÃÊ—Ã »ÊÌﬂ", 
+        hints: ["ÃÊ—Ã »ÊÌﬂ", "√‰œ—Ì” ≈‰ÌÌ” «", "œÌ›Ìœ »ÌﬂÂ«„", " Ê‰Ì ﬂ—Ê”"] 
+    },
+    { 
+        question: "„« ÂÊ «·‰«œÌ «·–Ì ”Ã· Âœ›« „‰ —ﬂ·… Õ—… „»«‘—… ›Ì „»«—«… œÊ—Ì √»ÿ«· √Ê—Ê»« »›÷·  ”œÌœ… Œ«œ⁄… „‰ ·«⁄» €Ì— „ Êﬁ⁄ø", 
+        answer: "≈‘»Ì·Ì…", 
+        hints: ["≈‘»Ì·Ì…", "»Ê— Ê", " Ê ‰Â«„", "√Ì«ﬂ”"] 
+    },
+    { 
+        question: "„« ÂÌ «·„»«—«… «· Ì ‘Âœ   ÕÊ·« €Ì— „ Êﬁ⁄ ›Ì «·‰ ÌÃ… »›÷· Âœ› ”Ã·Â ·«⁄» »œÌ· »⁄œ œﬁÌﬁ… Ê«Õœ… „‰ œŒÊ·Âø", 
+        answer: "·Ì›—»Ê· ÷œ „Ì·«‰", 
+        hints: ["·Ì›—»Ê· ÷œ „Ì·«‰", " ‘Ì·”Ì ÷œ „«‰‘” — ÌÊ‰«Ì œ", "√—”‰«· ÷œ »—‘·Ê‰…", "»«Ì—‰ „ÌÊ‰ÌŒ ÷œ »«—Ì” ”«‰ ÃÌ—„«‰"] 
+    },
+    { 
+        question: "√Ì „»«—«… ‘Âœ  ÕœÀ« ‰«œ—« ÕÌÀ  „  ”ÃÌ· Âœ› „‰ ÷—»… Ã“«¡ »⁄œ  ‰›Ì– Õ—ﬂ… „“œÊÃ… €Ì— „ Êﬁ⁄… „‰ «··«⁄»ø", 
+        answer: "√” Ê‰ ›Ì·« ÷œ ‰ÌÊﬂ«”·", 
+        hints: ["√” Ê‰ ›Ì·« ÷œ ‰ÌÊﬂ«”·", "»Ì—‰·Ì ÷œ ‘Ì›Ì·œ", "”«ÊÀÂ«„» Ê‰ ÷œ Ê« ›Ê—œ", "ﬂ—Ì” «· »«·«” ÷œ ‰Ê Ì‰€Â«„ ›Ê—” "] 
+    },
+    { 
+        question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· Âœ›« ›Ì ¬Œ— œﬁÌﬁ… „‰ «·„»«—«… »›÷·  ”œÌœ… „‰ ‰’› «·„·⁄»° ·ÌÕﬁﬁ «‰ ’«—« €Ì— „ Êﬁ⁄ ·›—ÌﬁÂø", 
+        answer: "Ã«‰ ›—«‰”Ê« œÊ„Ì‰€Ì“", 
+        hints: ["Ã«‰ ›—«‰”Ê« œÊ„Ì‰€Ì“", "√·Ì”«‰œ—Ê œÌ· »ÌÌ—Ê", "—Ìﬂ«—œÊ ﬂ«ﬂ«", "œÌœÌÂ œ—Ê€»«"] 
+    },
+    { 
+        question: "„« ÂÌ «·„»«—«… «· Ì  „ ≈Ìﬁ«›Â« „ƒﬁ « »”»» Â»Êÿ ÿ«∆—… œ—Ê‰ œ«Œ· «·„·⁄»ø", 
+        answer: "„«‰‘” — ÌÊ‰«Ì œ ÷œ  Ê ‰Â«„", 
+        hints: ["„«‰‘” — ÌÊ‰«Ì œ ÷œ  Ê ‰Â«„", "·Ì›—»Ê· ÷œ ≈Ì›— Ê‰", "»—‘·Ê‰… ÷œ √ ·Ì ÌﬂÊ „œ—Ìœ", "»«Ì—‰ „ÌÊ‰ÌŒ ÷œ »Ê—Ê”Ì« œÊ— „Ê‰œ"] 
+    },
+    { 
+        question: "√Ì ›—Ìﬁ ﬂ«‰ √Ê· „‰ ”Ã· Âœ›« Œ·«· „»«—«… ‰Â«∆Ì… ·œÊ—Ì √»ÿ«· √Ê—Ê»« »⁄œ „—Ê— 30 À«‰Ì… ›ﬁÿ „‰ »œ¡ «·„»«—«…ø", 
+        answer: "√Ê·„»Ìﬂ „«—”Ì·Ì«", 
+        hints: ["√Ê·„»Ìﬂ „«—”Ì·Ì«", "»«Ì—‰ „ÌÊ‰ÌŒ", "√Ì«ﬂ”", " ‘Ì·”Ì"] 
+    },
+    { 
+        question: "„‰ ÂÊ «·Õﬂ„ «·–Ì √‘Â— »ÿ«ﬁ… Õ„—«¡ Œ·«· „»«—«… œÊ—Ì √»ÿ«· √Ê—Ê»« »”»» «⁄ —«÷ ⁄·Ï ﬁ—«—  ﬂ‰Ê·ÊÃÌ €Ì— „”»Êﬁø", 
+        answer: "„«—ﬂ ﬂ·« Ì‰»Ì—€", 
+        hints: ["„«—ﬂ ﬂ·« Ì‰»Ì—€", "»ÌÌ—·ÊÌÃÌ ﬂÊ·Ì‰«", "Â«Ê«—œ ÊÌ»", "‰” Ê— »Ì «‰«"] 
+    },
+    { 
+        question: "„« ÂÌ «·„»«—«… «· Ì ‘Âœ   ”ÃÌ· Âœ› »Ê«”ÿ… Õ—ﬂ… „ﬁ’Ì… €Ì— „ Êﬁ⁄… ›Ì ¬Œ— ·ÕŸ… „‰ «·„»«—«… · ⁄œÌ· «·‰ ÌÃ…ø", 
+        answer: "—Ì«· „œ—Ìœ ÷œ »—Ê”Ì« œÊ— „Ê‰œ", 
+        hints: ["—Ì«· „œ—Ìœ ÷œ »—Ê”Ì« œÊ— „Ê‰œ", "„«‰‘” — ”Ì Ì ÷œ ·ÌÊ‰", "»—‘·Ê‰… ÷œ  ‘Ì·”Ì", "»«Ì—‰ „ÌÊ‰ÌŒ ÷œ —Ê„«"] 
+    },
+    { 
+        question: "„« ÂÊ «·›—Ìﬁ «·–Ì Õ’· ⁄·Ï —ﬂ·… Ã“«¡ €Ì— «⁄ Ì«œÌ… »⁄œ  ”œÌœ… „‰ —ﬂ·… —ﬂ‰Ì…  „  Õ—ÌﬂÂ« »«” Œœ«„ «· ﬂ‰Ê·ÊÃÌ« ·√Ê· „—…ø", 
+        answer: "ﬂÊ·‰", 
+        hints: ["ﬂÊ·‰", "›Ê·›”»Ê—Ã", "„«Ì‰“", "ÂÌ— « »—·Ì‰"] 
+    }
+], 
+impossible: [
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· √Ê· Âœ› ›Ì  «—ÌŒ ﬂ√” «·⁄«·„ ⁄«„ 1930ø", answer: "”Ì“«— œÌ·€«œÊ", hints: ["”Ì“«— œÌ·€«œÊ", "»«»·Ê œÊ—«œÊ", "√Ê“Ì»ÌÊ", "»Ì·ÌÂ"] },
+    { question: "„« ÂÊ «·›—Ìﬁ «·–Ì ›«“ »√Ê· œÊ—Ì √»ÿ«· √Ê—Ê»« ›Ì ‰”Œ Â «·√’·Ì… ⁄«„ 1956ø", answer: "—Ì«· „œ—Ìœ", hints: ["—Ì«· „œ—Ìœ", "»«—Ì” ”«‰ ÃÌ—„«‰", "»«Ì—‰ „ÌÊ‰ÌŒ", "„«‰‘” — ÌÊ‰«Ì œ"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· √Âœ«›« ›Ì √—»⁄ ‰”Œ „Œ ·›… „‰ ﬂ√” «·⁄«·„ø", answer: "„Ì—Ê”·«› ﬂ·Ê“Â", hints: ["„Ì—Ê”·«› ﬂ·Ê“Â", "»Ì·ÌÂ", "√Ê“Ì»ÌÊ", "“Ì‰ «·œÌ‰ “Ìœ«‰"] },
+    { question: "„« ÂÊ «·›—Ìﬁ «·–Ì ›«“ »√Ê· ﬂ√” ﬂÊ»« √„—Ìﬂ«ø", answer: "√Ê—Ê€Ê«Ì", hints: ["√Ê—Ê€Ê«Ì", "«·√—Ã‰ Ì‰", "«·»—«“Ì·", " ‘Ì·Ì"] },
+    { question: "„‰ ÂÊ «·„œ—» «·–Ì ﬁ«œ ›—Ìﬁ« ··›Ê“ »«·œÊ—Ì «·≈‰Ã·Ì“Ì «·„„ «“ ›Ì „Ê”„Ì‰ „  «·ÌÌ‰ „⁄ ›—ÌﬁÌ‰ „Œ ·›Ì‰ø", answer: "ÃÊ“ÌÂ „Ê—Ì‰ÌÊ", hints: ["ÃÊ“ÌÂ „Ê—Ì‰ÌÊ", "»Ì» €Ê«—œÌÊ·«", "√·Ìﬂ” ›Ì—€”Ê‰", "√‰ÿÊ‰ÌÊ ﬂÊ‰ Ì"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ›«“ »Ã«∆“… «·ﬂ—… «·–Â»Ì… ÊÂÊ Ì·⁄» ›Ì «·œÊ—Ì «·ÂÊ·‰œÌø", answer: "ÌÊÂ«‰ ﬂ—ÊÌ›", hints: ["ÌÊÂ«‰ ﬂ—ÊÌ›", "√—‰Ê·œ ‘Ê«—“‰€—", "ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "·ÌÊ‰Ì· „Ì”Ì"] },
+    { question: "„« ÂÊ «·‰«œÌ «·–Ì ”Ã· √ﬂ»— ⁄œœ „‰ «·√Âœ«› ›Ì „Ê”„ Ê«Õœ ›Ì «·œÊ—Ì «·≈‰Ã·Ì“Ì «·„„ «“ø", answer: "„«‰‘” — ”Ì Ì", hints: ["„«‰‘” — ”Ì Ì", "·Ì›—»Ê·", " ‘Ì·”Ì", "„«‰‘” — ÌÊ‰«Ì œ"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· «·Âœ› «·√ﬂÀ— ”—⁄… ›Ì  «—ÌŒ ﬂ√” «·⁄«·„ø", answer: "Â«ﬂ«‰ ‘ÊﬂÊ—", hints: ["Â«ﬂ«‰ ‘ÊﬂÊ—", "»Ì·ÌÂ", "„Ì—Ê”·«› ﬂ·Ê“Â", "√Ê“Ì»ÌÊ"] },
+    { question: "„« ÂÊ «·‰«œÌ «·–Ì Õﬁﬁ √ﬂ»— «‰ ’«— ›Ì  «—ÌŒ œÊ—Ì «·√»ÿ«· »À„«‰Ì… √Âœ«›ø", answer: "»«Ì—‰ „ÌÊ‰ÌŒ", hints: ["»«Ì—‰ „ÌÊ‰ÌŒ", "—Ì«· „œ—Ìœ", "»—‘·Ê‰…", "„«‰‘” — ÌÊ‰«Ì œ"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· Â« —Ìﬂ ›Ì ‰Â«∆Ì œÊ—Ì «·√»ÿ«·ø", answer: "ÃÊ—Ã »” ", hints: ["ÃÊ—Ã »” ", "ﬂ—Ì” Ì«‰Ê —Ê‰«·œÊ", "·ÌÊ‰Ì· „Ì”Ì", "—«ƒÊ·"] },
+    { question: "„« ÂÊ «·‰«œÌ «·–Ì ›«“ »√Ê· »ÿÊ·… ﬂ√” «·« Õ«œ «·≈‰Ã·Ì“Ìø", answer: "»·«ﬂ»Ì—‰ —Ê›—“", hints: ["»·«ﬂ»Ì—‰ —Ê›—“", " ‘Ì·”Ì", "„«‰‘” — ÌÊ‰«Ì œ", "√—”‰«·"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· Âœ› «·›Ê“ ›Ì ‰Â«∆Ì ﬂ√” «·⁄«·„ 1998ø", answer: "“Ì‰ «·œÌ‰ “Ìœ«‰", hints: ["“Ì‰ «·œÌ‰ “Ìœ«‰", "—Ê‰«·œÊ", "»Ì·ÌÂ", "„«—«œÊ‰«"] },
+    { question: "„« ÂÊ «·„‰ Œ» «·–Ì ”Ã· √ﬂ»— ⁄œœ „‰ «·√Âœ«› ›Ì „»«—«… ‰Â«∆Ì ﬂ√” «·⁄«·„ø", answer: "√·„«‰Ì« «·€—»Ì…", hints: ["√·„«‰Ì« «·€—»Ì…", "«·√—Ã‰ Ì‰", "«·»—«“Ì·", "≈Ìÿ«·Ì«"] },
+    { question: "„‰ ÂÊ «··«⁄» «·–Ì ”Ã· √Ê· Âœ› ›Ì  «—ÌŒ ﬂ√” «·⁄«·„ ··”Ìœ« ø", answer: "„Ì‘Ì· √ﬂÌ‰”", hints: ["„Ì‘Ì· √ﬂÌ‰”", "„Ì« Â«„", "ﬂ«—·Ì ·ÊÌœ", "‰«œÌ·«" ] },
+    { question: "„« ÂÊ «·‰«œÌ «·–Ì ›«“ »√Ê· œÊ—Ì ≈”»«‰Ìø", answer: "√ · Ìﬂ »·»«Ê", hints: ["√ · Ìﬂ »·»«Ê", "—Ì«· „œ—Ìœ", "»—‘·Ê‰…", "√ ·Ì ÌﬂÊ „œ—Ìœ"] }
+], 
+};
+
+    // «·›Â—” «·Õ«·Ì ··”ƒ«·
+    const currentQuestionIndex = {
+        general: 0,
+        matches: 0,
+        events: 0,
+        impossible: 0
+    };
+
+    // ⁄œœ «·√”∆·… ›Ì ﬂ· ﬁ”„
+    const totalQuestions = {
+        general: questions.general.length,
+        matches: questions.matches.length,
+        events: questions.events.length,
+        impossible: questions.impossible.length
+    };
+
+    function showSection(sectionId) {
+        // ≈Œ›«¡ Ã„Ì⁄ «·√ﬁ”«„
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.display = 'none';
+        });
+        // ⁄—÷ «·ﬁ”„ «·„Õœœ
+        document.getElementById(`${sectionId}Section`).style.display = 'block';
+        shuffleQuestions(sectionId); // Œ·ÿ «·√”∆·… ⁄‰œ ⁄—÷ «·ﬁ”„
+        loadQuestion(sectionId);
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function shuffleQuestions(sectionId) {
+        shuffle(questions[sectionId]);
+        currentQuestionIndex[sectionId] = 0; // ≈⁄«œ…  ⁄ÌÌ‰ «·›Â—” ⁄‰œ «·Œ·ÿ
+    }
+
+    function loadQuestion(sectionId) {
+        const section = document.getElementById(`${sectionId}Section`);
+        const questionElement = section.querySelector(`#question${capitalize(sectionId)}`);
+        const hints = section.querySelector('.hints');
+        const messageElement = section.querySelector(`#${sectionId}Message`);
+        const counterElement = section.querySelector(`#${sectionId}Counter`);
+        
+        const questionData = questions[sectionId][currentQuestionIndex[sectionId]];
+        
+        questionElement.textContent = questionData.question;
+        messageElement.textContent = '';
+        
+        //  ÕœÌÀ ⁄œ«œ «·√”∆·…
+        counterElement.textContent = `”ƒ«· ${currentQuestionIndex[sectionId] + 1} „‰ ${totalQuestions[sectionId]}`;
+
+        // Õ–› Ã„Ì⁄ ⁄‰«’— «· ·„ÌÕ «·ﬁœÌ„…
+        while (hints.firstChild) {
+            hints.removeChild(hints.firstChild);
+        }
+
+        // Œ·ÿ «· ·„ÌÕ« 
+        const shuffledHints = [...questionData.hints];
+        shuffle(shuffledHints);
+
+        // ≈÷«›…  ·„ÌÕ«  ÃœÌœ…
+        shuffledHints.forEach(hint => {
+            const hintSpan = document.createElement('span');
+            hintSpan.textContent = hint;
+            hintSpan.className = 'hint';
+            hintSpan.onclick = function () { checkAnswer(sectionId, hint); };
+            hints.appendChild(hintSpan);
+        });
+    }
+
+    function checkAnswer(sectionId, selectedHint) {
+        const questionData = questions[sectionId][currentQuestionIndex[sectionId]];
+        const messageElement = document.getElementById(`${sectionId}Message`);
+        const hints = document.getElementById(`${sectionId}Hints`).children;
+
+        // ≈“«·… √Ì ≈ÿ«— „ÊÃÊœ
+        for (let hint of hints) {
+            hint.style.border = '';
+        }
+
+        if (selectedHint === questionData.answer) {
+            messageElement.textContent = '≈Ã«»… ’ÕÌÕ… ??!';
+            messageElement.className = 'message correct';
+        } else {
+            messageElement.textContent = '≈Ã«»… Œ«ÿ∆…° ??!';
+            messageElement.className = 'message incorrect';
+            
+            // Ê÷⁄ ≈ÿ«— √Œ÷— ÕÊ· «·≈Ã«»… «·’ÕÌÕ…
+            for (let hint of hints) {
+                if (hint.textContent === questionData.answer) {
+                    hint.style.border = '2px solid green';
+                }
+            }
+        }
+
+        setTimeout(() => {
+            if (currentQuestionIndex[sectionId] < questions[sectionId].length - 1) {
+                currentQuestionIndex[sectionId]++;
+                loadQuestion(sectionId);
+            } else {
+                // ⁄—÷ —”«·… ⁄‰œ «·«‰ Â«¡ „‰ Ã„Ì⁄ «·√”∆·…
+                messageElement.textContent = "«‰ ﬁ· ≈·Ï ﬁ”„ ¬Œ— ·«Œ »«— „⁄—› ﬂ √ﬂÀ—! ???";
+                messageElement.className = 'message correct';
+            }
+        }, 2000); // «·«‰ ﬁ«· ≈·Ï «·”ƒ«· «· «·Ì »⁄œ À«‰Ì Ì‰
+    }
+
+    function prevQuestion(sectionId) {
+        if (currentQuestionIndex[sectionId] > 0) {
+            currentQuestionIndex[sectionId]--;
+            loadQuestion(sectionId);
+        }
+    }
+
+    function nextQuestion(sectionId) {
+        if (currentQuestionIndex[sectionId] < questions[sectionId].length - 1) {
+            currentQuestionIndex[sectionId]++;
+            loadQuestion(sectionId);
+        }
+    }
+
+    function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function closePopup() {
+        document.getElementById('popupOverlay').style.display = 'none';
+        document.getElementById('popupAd').style.display = 'none';
+    }
+
+    // ÊŸÌ›… «· ﬁ«ÿ «·‘«‘…
+    function takeScreenshot() {
+        // «” Âœ«› «·ﬁ”„ «·„⁄—Ê÷ Õ«·Ì«
+        const section = document.querySelector('.section:not([style*="display: none"])');
+
+        html2canvas(section).then(canvas => {
+            //  ÕÊÌ· «·’Ê—… ≈·Ï —«»ÿ · ‰“Ì·Â«
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL();
+            link.download = 'screenshot.png';
+            link.click(); //  ‰“Ì· «·’Ê—…  ·ﬁ«∆Ì«
+        });
+    }
+
+    // ≈ŸÂ«— ‰«›–… „‰»Àﬁ… »⁄œ 5 ÀÊ«‰Ì
+    setTimeout(() => {
+        document.getElementById('popupOverlay').style.display = 'block';
+        document.getElementById('popupAd').style.display = 'block';
+    }, 5000);
+</script>
